@@ -24,6 +24,9 @@ public class Restaurant extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String restaurantAddress;
 
+    @Column(nullable = false)
+    private Float restaurantStar;
+
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Review> reviewList = new ArrayList<>();
 
