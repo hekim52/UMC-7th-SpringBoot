@@ -2,11 +2,10 @@ spring:
   #  application:
   #    name: study
 
-  datasource:
-    url: jdbc:mysql://localhost:3306/study
-    username: root
-    password: 8202
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  config:
+    import:
+      - classpath:/database.yml
+
   jpa:
     hibernate:
       ddl-auto: create
