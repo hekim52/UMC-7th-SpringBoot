@@ -30,6 +30,10 @@ public class Restaurant extends BaseEntity {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Review> reviewList = new ArrayList<>();
 
+    public void setReview(Review review) {
+        this.reviewList.add(review);
+    }
+
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Mission> missionList = new ArrayList<>();
 
