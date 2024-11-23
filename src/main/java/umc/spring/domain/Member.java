@@ -100,6 +100,10 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Review> reviewList = new ArrayList<>();
 
+    public void setReview(Review review) {
+        this.reviewList.add(review);
+    }
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<TermsAgree> termsAgreeList = new ArrayList<>();
 
@@ -109,4 +113,7 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MissionHistory> missionHistoryList = new ArrayList<>();
 
+    public void setMissionHistory(MissionHistory missionHistory) {
+        this.missionHistoryList.add(missionHistory);
+    }
 }
