@@ -39,6 +39,7 @@ public class RestaurantConverter {
 
     // 미션 도전
     public static RestaurantResponseDTO.ChallengeResultDTO toChallengeResultDTO(MissionHistory missionHistory) {
+
         return RestaurantResponseDTO.ChallengeResultDTO.builder()
                 .missionHistoryId(missionHistory.getId())
                 .createdAt(missionHistory.getCreatedAt())
@@ -51,6 +52,28 @@ public class RestaurantConverter {
                 .member(member)
                 .mission(mission)
                 .missionState(0)
+                .build();
+    }
+
+
+    // 미션 추가
+    public static RestaurantResponseDTO.AddMissionResultDTO toAddMissionResultDTO(Mission mission) {
+
+        return RestaurantResponseDTO.AddMissionResultDTO.builder()
+                .missionId(mission.getId())
+                .createdAt(mission.getCreatedAt())
+                .build();
+    }
+
+    public static Mission toMission(RestaurantRequestDTO.AddMissionDTO request, Restaurant restaurant) {
+
+        return Mission.builder()
+                .restaurant(restaurant)
+                .moreThanPrice(request.getMoreThanPrice())
+                .getPoint(request.getGetPoint())
+                .dDay(request.getD_day())
+                .ownerId(request.getOwnerId())
+                .missionHistoryList(new ArrayList<>())
                 .build();
     }
 }
