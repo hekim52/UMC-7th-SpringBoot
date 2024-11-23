@@ -11,7 +11,21 @@ import java.util.Map;
 public class RestaurantRequestDTO {
 
     @Getter
-    public static class ReviewDto {
+    public static class AddRestaurantDTO {
+
+        @NotNull
+        Long memberId;
+
+        @NotNull
+        Long regionId;
+        @NotBlank
+        String restaurantName;
+        @NotBlank
+        String restaurantAddress;
+    }
+
+    @Getter
+    public static class ReviewDTO {
 
         @NotNull
         Long memberId;
