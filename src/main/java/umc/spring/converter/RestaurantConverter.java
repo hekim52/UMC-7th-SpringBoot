@@ -1,10 +1,7 @@
 package umc.spring.converter;
 
 import lombok.RequiredArgsConstructor;
-import umc.spring.domain.Member;
-import umc.spring.domain.Mission;
-import umc.spring.domain.Restaurant;
-import umc.spring.domain.Review;
+import umc.spring.domain.*;
 import umc.spring.domain.mapping.MissionHistory;
 import umc.spring.web.dto.RestaurantRequestDTO;
 import umc.spring.web.dto.RestaurantResponseDTO;
@@ -15,6 +12,28 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class RestaurantConverter {
 
+    // 가게 추가
+    public static RestaurantResponseDTO.AddRestaurantResultDTO toRestaurantResultDTO(Restaurant restaurant){
+
+        return RestaurantResponseDTO.AddRestaurantResultDTO.builder()
+                .restaurantId(restaurant.getId())
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
+
+    public static Restaurant toRestaurant(RestaurantRequestDTO.AddRestaurantDTO request, Region region) {
+
+        return Restaurant.builder()
+                .region(region)
+                .restaurantName(request.getRestaurantName())
+                .restaurantAddress(request.getRestaurantAddress())
+                .restaurantStar(0F)
+                .reviewList(new ArrayList<>())
+                .missionList(new ArrayList<>())
+                .build();
+    }
+
+
     // 리뷰
     public static RestaurantResponseDTO.ReviewResultDTO toReviewResultDTO(Review review){
 
@@ -24,7 +43,7 @@ public class RestaurantConverter {
                 .build();
     }
 
-    public static Review toReview(RestaurantRequestDTO.ReviewDto request, Member member, Restaurant restaurant) {
+    public static Review toReview(RestaurantRequestDTO.ReviewDTO request, Member member, Restaurant restaurant) {
 
         return Review.builder()
                 .member(member)
