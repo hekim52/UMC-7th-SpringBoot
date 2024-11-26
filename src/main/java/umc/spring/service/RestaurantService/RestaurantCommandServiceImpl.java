@@ -83,4 +83,17 @@ public class RestaurantCommandServiceImpl implements RestaurantCommandService {
 
         return missionHistoryRepository.save(missionHistory);
     }
+
+
+    // 미션 추가
+    @Override
+    @Transactional
+    public Mission addMission(Long restaurantId, RestaurantRequestDTO.AddMissionDTO request) {
+
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).get();
+
+        Mission mission = RestaurantConverter.toMission(request, restaurant);
+
+        return missionRepository.save(mission);
+    }
 }
