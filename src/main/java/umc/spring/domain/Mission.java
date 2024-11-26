@@ -39,4 +39,7 @@ public class Mission extends BaseEntity {
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
     private List<MissionHistory> missionHistoryList = new ArrayList<>();
 
+    public void setMissionHistory(MissionHistory missionHistory) {
+        this.missionHistoryList.add(missionHistory);
+    }
 }
