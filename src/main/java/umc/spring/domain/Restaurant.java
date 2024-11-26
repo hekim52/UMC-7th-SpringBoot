@@ -37,6 +37,10 @@ public class Restaurant extends BaseEntity {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Mission> missionList = new ArrayList<>();
 
+    public void setMission(Mission mission) {
+        this.missionList.add(mission);
+    }
+
     @Override
     public String toString() {
         return "Store{" +

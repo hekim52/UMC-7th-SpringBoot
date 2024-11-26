@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import umc.spring.validation.annotation.ChallengingMission;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 public class RestaurantRequestDTO {
@@ -30,5 +31,21 @@ public class RestaurantRequestDTO {
 
         @ChallengingMission
         Map<String, Long> missionMemberIdMap;
+    }
+
+    @Getter
+    public static class AddMissionDTO {
+
+        @NotNull
+        Long memberId;
+
+        @NotNull
+        Long moreThanPrice;
+        @NotNull
+        Long getPoint;
+        @NotNull
+        LocalDate d_day;
+        @NotNull
+        Long ownerId;
     }
 }

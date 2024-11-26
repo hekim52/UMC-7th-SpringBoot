@@ -1,5 +1,6 @@
 package umc.spring.service.RestaurantService;
 
+import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
 import umc.spring.domain.mapping.MissionHistory;
 import umc.spring.web.dto.RestaurantRequestDTO;
@@ -18,4 +19,8 @@ public interface RestaurantCommandService {
     boolean MissionChallengeValidate(Map<String, Long> missionMemberIdMap);
 
     MissionHistory challenge(Long missionId, RestaurantRequestDTO.ChallengeDTO request);
+
+
+    // 미션 추가
+    Mission addMission(Long restaurantId, RestaurantRequestDTO.AddMissionDTO request);
 }

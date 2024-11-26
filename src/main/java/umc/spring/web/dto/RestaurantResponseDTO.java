@@ -25,7 +25,18 @@ public class RestaurantResponseDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ChallengeResultDTO {
+
         Long missionHistoryId;
+        LocalDateTime createdAt;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AddMissionResultDTO {
+
+        Long missionId;
         LocalDateTime createdAt;
     }
 }

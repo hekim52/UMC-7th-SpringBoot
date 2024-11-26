@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import umc.spring.apiPayload.ApiResponse;
 import umc.spring.converter.RestaurantConverter;
+import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
 import umc.spring.domain.mapping.MissionHistory;
 import umc.spring.service.RestaurantService.RestaurantCommandService;
@@ -46,5 +47,16 @@ public class RestaurantRestController {
         MissionHistory missionHistory = restaurantCommandService.challenge(missionId, request);
 
         return ApiResponse.onSuccess(RestaurantConverter.toChallengeResultDTO(missionHistory));
+    }
+
+    // 미션 추가
+    @PostMapping("/{restaurantId}/addMission")
+    public ApiResponse<RestaurantResponseDTO.AddMissionResultDTO> addMission (
+            @PathVariable Long restaurantId,
+            @RequestBody @Valid RestaurantRequestDTO.AddMissionDTO request) {
+
+        Mission mission = restaurantCommandService.addMission(restaurantId, request);
+
+        return ApiResponse.onSuccess(RestaurantConverter.toAddMissionResultDTO(mission));
     }
 }
