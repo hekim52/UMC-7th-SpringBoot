@@ -4,14 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.spring.converter.RestaurantConverter;
-import umc.spring.domain.Member;
-import umc.spring.domain.Mission;
-import umc.spring.domain.Restaurant;
-import umc.spring.domain.Review;
+import umc.spring.domain.*;
 import umc.spring.domain.mapping.MissionHistory;
 import umc.spring.repository.MemberRepository.MemberRepository;
 import umc.spring.repository.MissionHistoryRepository.MissionHistoryRepository;
 import umc.spring.repository.MissionRepository.MissionRepository;
+import umc.spring.repository.RegionRepository.RegionRepository;
 import umc.spring.repository.RestaurantRepository.RestaurantRepository;
 import umc.spring.repository.ReviewRepository.ReviewRepository;
 import umc.spring.web.dto.RestaurantRequestDTO;
@@ -30,6 +28,20 @@ public class RestaurantCommandServiceImpl implements RestaurantCommandService {
     private final RestaurantRepository restaurantRepository;
     private final MissionHistoryRepository missionHistoryRepository;
     private final MissionRepository missionRepository;
+    private final RegionRepository regionRepository;
+
+    // 가게 추가
+    @Override
+    @Transactional
+    public Restaurant addRestaurant(RestaurantRequestDTO.AddRestaurantDTO request) {
+
+        Region region = regionRepository.findById(request.getRegionId()).get();
+
+        Restaurant newRestaurant = RestaurantConverter.toRestaurant(request, region);
+        region.setRestaurant(newRestaurant);
+
+        return restaurantRepository.save(newRestaurant);
+    }
 
     // 리뷰하기
     @Override
@@ -39,7 +51,7 @@ public class RestaurantCommandServiceImpl implements RestaurantCommandService {
 
     @Override
     @Transactional
-    public Review review(Long restaurantId, RestaurantRequestDTO.ReviewDto request) {
+    public Review review(Long restaurantId, RestaurantRequestDTO.ReviewDTO request) {
 
         Member member = memberRepository.findById(request.getMemberId()).get();
         Restaurant restaurant = restaurantRepository.findById(restaurantId).get();
@@ -79,9 +91,11 @@ public class RestaurantCommandServiceImpl implements RestaurantCommandService {
         Member member = memberRepository.findById(request.getMemberId()).get();
         Mission mission = missionRepository.findById(missionId).get();
 
-        MissionHistory missionHistory = RestaurantConverter.toMissionHistory(member, mission);
+        MissionHistory newMissionHistory = RestaurantConverter.toMissionHistory(member, mission);
+        member.setMissionHistory(newMissionHistory);
+        mission.setMissionHistory(newMissionHistory);
 
-        return missionHistoryRepository.save(missionHistory);
+        return missionHistoryRepository.save(newMissionHistory);
     }
 
 
@@ -92,8 +106,9 @@ public class RestaurantCommandServiceImpl implements RestaurantCommandService {
 
         Restaurant restaurant = restaurantRepository.findById(restaurantId).get();
 
-        Mission mission = RestaurantConverter.toMission(request, restaurant);
+        Mission newMission = RestaurantConverter.toMission(request, restaurant);
+        restaurant.setMission(newMission);
 
-        return missionRepository.save(mission);
+        return missionRepository.save(newMission);
     }
 }
