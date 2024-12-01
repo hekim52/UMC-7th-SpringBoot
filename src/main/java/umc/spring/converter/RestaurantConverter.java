@@ -92,7 +92,7 @@ public class RestaurantConverter {
                 .restaurant(restaurant)
                 .moreThanPrice(request.getMoreThanPrice())
                 .getPoint(request.getGetPoint())
-                .dDay(request.getD_day())
+                .d_Day(request.getD_day())
                 .ownerId(request.getOwnerId())
                 .missionHistoryList(new ArrayList<>())
                 .build();
@@ -119,6 +119,33 @@ public class RestaurantConverter {
                 .totalPage(reviewList.getTotalPages())
                 .listSize(reviewList.getTotalElements())
                 .reviewList(reviewPreViewDTOList)
+                .build();
+    }
+
+    // 특정 가게의 미션 목록 조회
+    public static RestaurantResponseDTO.MissionDTO missionDTO(Mission mission){
+
+        return RestaurantResponseDTO.MissionDTO.builder()
+                .missionId(mission.getId())
+                .moreThanPrice(mission.getMoreThanPrice())
+                .getPoint(mission.getGetPoint())
+                .d_Day(mission.getD_Day())
+                .ownerId(mission.getOwnerId())
+                .createdAt(mission.getCreatedAt().toLocalDate())
+                .build();
+    }
+
+    public static RestaurantResponseDTO.MissionListDTO missionListDTO(Page<Mission> missionList){
+
+        List<RestaurantResponseDTO.MissionDTO> missionDTOList = missionList.stream()
+                .map(RestaurantConverter::missionDTO).collect(Collectors.toList());
+
+        return RestaurantResponseDTO.MissionListDTO.builder()
+                .isLast(missionList.isLast())
+                .isFirst(missionList.isFirst())
+                .totalPage(missionList.getTotalPages())
+                .listSize(missionList.getTotalElements())
+                .missionList(missionDTOList)
                 .build();
     }
 }
