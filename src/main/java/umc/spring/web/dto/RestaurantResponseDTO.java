@@ -75,4 +75,30 @@ public class RestaurantResponseDTO {
         String body;
         LocalDate createdAt;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MissionListDTO {
+        List<MissionDTO> missionList;
+        Long listSize;
+        Integer totalPage;
+        Long totalElements;
+        Boolean isFirst;
+        Boolean isLast;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MissionDTO {
+        Long missionId;
+        Long moreThanPrice;
+        Long getPoint;
+        LocalDate d_Day;
+        Long ownerId;
+        LocalDate createdAt;
+    }
 }
