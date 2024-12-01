@@ -32,8 +32,8 @@ public class Review extends BaseEntity {
     @Column(nullable = false, length = 500)
     private String content;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
-    private List<ReviewReply> reviewReplyList = new ArrayList<>();
+    @OneToOne(mappedBy = "review", cascade = CascadeType.ALL)
+    private ReviewReply reviewReply;
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewPicture> reviewPictureList = new ArrayList<>();
