@@ -1,6 +1,7 @@
 package umc.spring.converter;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import umc.spring.domain.*;
 import umc.spring.domain.mapping.MissionHistory;
 import umc.spring.web.dto.RestaurantRequestDTO;
@@ -8,6 +9,8 @@ import umc.spring.web.dto.RestaurantResponseDTO;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class RestaurantConverter {
@@ -93,6 +96,30 @@ public class RestaurantConverter {
                 .dDay(request.getD_day())
                 .ownerId(request.getOwnerId())
                 .missionHistoryList(new ArrayList<>())
+                .build();
+    }
+
+    // 가게의 리뷰 목록 조회
+    public static RestaurantResponseDTO.ReviewPreViewDTO reviewPreViewDTO(Review review){
+        return RestaurantResponseDTO.ReviewPreViewDTO.builder()
+                .ownerNickname(review.getMember().getName())
+                .score(review.getStar())
+                .createdAt(review.getCreatedAt().toLocalDate())
+                .body(review.getContent())
+                .build();
+    }
+
+    public static RestaurantResponseDTO.ReviewPreViewListDTO reviewPreViewListDTO(Page<Review> reviewList){
+
+        List<RestaurantResponseDTO.ReviewPreViewDTO> reviewPreViewDTOList = reviewList.stream()
+                .map(RestaurantConverter::reviewPreViewDTO).collect(Collectors.toList());
+
+        return RestaurantResponseDTO.ReviewPreViewListDTO.builder()
+                .isLast(reviewList.isLast())
+                .isFirst(reviewList.isFirst())
+                .totalPage(reviewList.getTotalPages())
+                .listSize(reviewList.getTotalElements())
+                .reviewList(reviewPreViewDTOList)
                 .build();
     }
 }

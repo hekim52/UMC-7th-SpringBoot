@@ -30,6 +30,12 @@ public class RestaurantCommandServiceImpl implements RestaurantCommandService {
     private final MissionRepository missionRepository;
     private final RegionRepository regionRepository;
 
+    // 페이징 값 validation
+    @Override
+    public boolean PageTooSmallValidate(Integer page) {
+        return page > 0;
+    }
+
     // 가게 추가
     @Override
     @Transactional
