@@ -44,4 +44,31 @@ public class MemberResponseDTO {
         LocalDate createdAt;
         String replyContent;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MyMissionListDTO {
+        List<MyMissionDTO> missionList;
+        Integer listSize;
+        Integer totalPage;
+        Long totalElements;
+        Boolean isFirst;
+        Boolean isLast;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MyMissionDTO {
+        Long missionId;
+        String restaurantName;
+        Long moreThanPrice;
+        Long getPoint;
+        LocalDate d_Day;
+        Long ownerId;
+        LocalDate createdAt;
+    }
 }
