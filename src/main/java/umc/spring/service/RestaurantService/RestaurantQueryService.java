@@ -1,6 +1,7 @@
 package umc.spring.service.RestaurantService;
 
 import org.springframework.data.domain.Page;
+import umc.spring.domain.Mission;
 import umc.spring.domain.Restaurant;
 import umc.spring.domain.Review;
 
@@ -13,5 +14,7 @@ public interface RestaurantQueryService {
 
     List<Restaurant> findRestaurantsByNameAndScore(String restaurantName, Float restaurantStar);
 
-    Page<Review> getReviewList(Long RestaurantId, Integer page);
+    Page<Review> getReviewList(Long restaurantId, Integer page);
+
+    Page<Mission> getMissionList(Long restaurantId, Integer page);
 }

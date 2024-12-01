@@ -31,7 +31,7 @@ public class Mission extends BaseEntity {
     private Long getPoint;
 
     @Column(nullable = false)
-    private LocalDate dDay;
+    private LocalDate d_Day;
 
     @Column(nullable = false)
     private Long ownerId;
