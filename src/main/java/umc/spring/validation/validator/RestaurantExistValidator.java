@@ -6,16 +6,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import umc.spring.apiPayload.code.status.ErrorStatus;
 import umc.spring.service.RestaurantService.RestaurantCommandService;
-import umc.spring.validation.annotation.ExistReviewRestaurant;
+import umc.spring.validation.annotation.ExistRestaurant;
 
 @Component
 @RequiredArgsConstructor
-public class ReviewRestaurantExistValidator implements ConstraintValidator<ExistReviewRestaurant, Long> {
+public class RestaurantExistValidator implements ConstraintValidator<ExistRestaurant, Long> {
 
     private final RestaurantCommandService restaurantCommandService;
 
     @Override
-    public void initialize(ExistReviewRestaurant constraintAnnotation) {
+    public void initialize(ExistRestaurant constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
@@ -26,7 +26,7 @@ public class ReviewRestaurantExistValidator implements ConstraintValidator<Exist
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(ErrorStatus.REVIEW_RESTAURANT_NOT_FOUND.toString()).addConstraintViolation();
+            context.buildConstraintViolationWithTemplate(ErrorStatus.RESTAURANT_NOT_FOUND.toString()).addConstraintViolation();
         }
 
         return isValid;
