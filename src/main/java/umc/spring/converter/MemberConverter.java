@@ -2,6 +2,7 @@ package umc.spring.converter;
 
 import org.springframework.data.domain.Page;
 import umc.spring.domain.Member;
+import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
 import umc.spring.domain.ReviewReply;
 import umc.spring.domain.enums.Gender;
@@ -80,6 +81,34 @@ public class MemberConverter {
                 .totalElements(reviewList.getTotalElements())
                 .listSize(myReviewDTOList.size())
                 .reviewList(myReviewDTOList)
+                .build();
+    }
+
+    public static MemberResponseDTO.MyMissionDTO myMissionDTO(Mission mission){
+
+        return MemberResponseDTO.MyMissionDTO.builder()
+                .missionId(mission.getId())
+                .restaurantName(mission.getRestaurant().getRestaurantName())
+                .moreThanPrice(mission.getMoreThanPrice())
+                .getPoint(mission.getGetPoint())
+                .d_Day(mission.getD_Day())
+                .ownerId(mission.getOwnerId())
+                .createdAt(mission.getCreatedAt().toLocalDate())
+                .build();
+    }
+
+    public static MemberResponseDTO.MyMissionListDTO myMissionListDTO(Page<Mission> missionList){
+
+        List<MemberResponseDTO.MyMissionDTO> myMissionDTOList = missionList.stream()
+                .map(MemberConverter::myMissionDTO).collect(Collectors.toList());
+
+        return MemberResponseDTO.MyMissionListDTO.builder()
+                .isLast(missionList.isLast())
+                .isFirst(missionList.isFirst())
+                .totalPage(missionList.getTotalPages())
+                .totalElements(missionList.getTotalElements())
+                .listSize(myMissionDTOList.size())
+                .missionList(myMissionDTOList)
                 .build();
     }
 }
