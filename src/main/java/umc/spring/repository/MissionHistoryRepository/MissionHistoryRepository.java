@@ -12,6 +12,9 @@ import java.util.List;
 
 public interface MissionHistoryRepository extends JpaRepository<MissionHistory, Long> {
 
+    @Query("select mh from MissionHistory mh where mh.member.id = :memberId and mh.mission.id = :missionId")
+    List<MissionHistory> findAllByMemberIdAndMissionId(@Param("memberId") Long memberId,@Param("missionId") Long missionId);
+
     @Query("select mh.mission from MissionHistory mh where mh.member.id = :memberId and mh.missionState = 0")
     Page<Mission> findNotFinishedMissionByMemberId(@Param("memberId") Long memberId, Pageable pageable);
 
