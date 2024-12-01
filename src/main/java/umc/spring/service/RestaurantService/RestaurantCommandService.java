@@ -10,6 +10,10 @@ import java.util.Map;
 
 public interface RestaurantCommandService {
 
+    // 페이징 값 validation
+    boolean PageTooSmallValidate(Integer page);
+
+
     // 가게 추가
     Restaurant addRestaurant(RestaurantRequestDTO.AddRestaurantDTO request);
 
