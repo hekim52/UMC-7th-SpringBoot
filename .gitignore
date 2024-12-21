@@ -1,4 +1,5 @@
 src/main/resources/database.yml
+src/main/resources/security.yml
 
 HELP.md
 .gradle
