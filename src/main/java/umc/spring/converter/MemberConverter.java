@@ -40,14 +40,17 @@ public class MemberConverter {
         }
 
         return Member.builder()
-                .address(request.getAddress())
-                .specAddress(request.getSpecAddress())
+                .name(request.getName())
+                .email(request.getEmail())
+                .password(request.getPassword())
                 .gender(gender)
                 .birthYear(request.getBirthYear())
                 .birthMonth(request.getBirthMonth())
                 .birthDay(request.getBirthDay())
-                .name(request.getName())
+                .address(request.getAddress())
+                .specAddress(request.getSpecAddress())
                 .memberPreferList(new ArrayList<>())
+                .role(request.getRole())
                 .build();
     }
 
