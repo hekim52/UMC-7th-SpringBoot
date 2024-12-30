@@ -5,6 +5,7 @@ spring:
   config:
     import:
       - classpath:/database.yml
+      - classpath:/security.yml
 
   jpa:
     hibernate:
