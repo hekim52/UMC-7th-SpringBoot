@@ -2,6 +2,9 @@ src/main/resources/application.yml
 src/main/resources/database.yml
 src/main/resources/security.yml
 
+# QueryDSL Q파일 경로
+src/main/generated/
+
 HELP.md
 .gradle
 build/
