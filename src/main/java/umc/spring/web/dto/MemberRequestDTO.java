@@ -16,28 +16,29 @@ public class MemberRequestDTO {
     @Getter
     @Setter
     public static class JoinDto{
+
         @NotBlank
         String name;
-        @NotBlank
-        @Email
-        String email;
-        @NotBlank
-        String password;
+
         @NotNull
         Integer gender;
+
         @NotNull
         Integer birthYear;
+
         @NotNull
         Integer birthMonth;
+
         @NotNull
         Integer birthDay;
+
         @Size(min = 5, max = 12)
         String address;
+
         @Size(min = 5, max = 12)
         String specAddress;
+
         @ExistCategories
         List<Long> preferCategory;
-        @NotNull
-        Role role;
     }
 }

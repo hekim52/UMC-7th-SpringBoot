@@ -1,5 +1,6 @@
 package umc.spring.service.RestaurantService;
 
+import org.springframework.web.multipart.MultipartFile;
 import umc.spring.domain.Mission;
 import umc.spring.domain.Restaurant;
 import umc.spring.domain.Review;
@@ -21,7 +22,7 @@ public interface RestaurantCommandService {
     // 리뷰하기
     boolean ReviewRestaurantExistValidate(Long restaurantId);
 
-    Review review(Long restaurantId, RestaurantRequestDTO.ReviewDTO request);
+    Review review(Long restaurantId, RestaurantRequestDTO.ReviewDTO request, MultipartFile reviewPicture);
 
 
     // 미션 도전하기

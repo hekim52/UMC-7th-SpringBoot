@@ -3,7 +3,12 @@ package umc.spring.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import umc.spring.aws.s3.AmazonS3Manager;
+import umc.spring.aws.s3.Uuid;
+import umc.spring.aws.s3.UuidRepository;
 import umc.spring.converter.RestaurantConverter;
+import umc.spring.converter.ReviewConverter;
 import umc.spring.domain.*;
 import umc.spring.domain.mapping.MissionHistory;
 import umc.spring.repository.MemberRepository.MemberRepository;
@@ -11,12 +16,14 @@ import umc.spring.repository.MissionHistoryRepository.MissionHistoryRepository;
 import umc.spring.repository.MissionRepository.MissionRepository;
 import umc.spring.repository.RegionRepository.RegionRepository;
 import umc.spring.repository.RestaurantRepository.RestaurantRepository;
+import umc.spring.repository.ReviewImageRepository.ReviewImageRepository;
 import umc.spring.repository.ReviewRepository.ReviewRepository;
 import umc.spring.web.dto.RestaurantRequestDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +36,10 @@ public class RestaurantCommandServiceImpl implements RestaurantCommandService {
     private final MissionHistoryRepository missionHistoryRepository;
     private final MissionRepository missionRepository;
     private final RegionRepository regionRepository;
+
+    private final AmazonS3Manager s3Manager;
+    private final UuidRepository uuidRepository;
+    private final ReviewImageRepository reviewImageRepository;
 
     // 페이징 값 validation
     @Override
@@ -57,15 +68,23 @@ public class RestaurantCommandServiceImpl implements RestaurantCommandService {
 
     @Override
     @Transactional
-    public Review review(Long restaurantId, RestaurantRequestDTO.ReviewDTO request) {
+    public Review review(Long restaurantId, RestaurantRequestDTO.ReviewDTO request, MultipartFile reviewPicture) {
 
         Member member = memberRepository.findById(request.getMemberId()).get();
         Restaurant restaurant = restaurantRepository.findById(restaurantId).get();
 
         Review newReview = RestaurantConverter.toReview(request, member, restaurant);
 
+        String uuid = UUID.randomUUID().toString();
+        Uuid savedUuid = uuidRepository.save(Uuid.builder()
+                .uuid(uuid).build());
+
+        String pictureUrl = s3Manager.uploadFile(s3Manager.generateReviewKeyName(savedUuid), reviewPicture);
+
         member.setReview(newReview);
         restaurant.setReview(newReview);
+
+        reviewImageRepository.save(ReviewConverter.toReviewImage(pictureUrl, newReview));
 
         return reviewRepository.save(newReview);
     }

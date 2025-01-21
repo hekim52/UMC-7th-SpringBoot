@@ -2,7 +2,6 @@ package umc.spring.service.MemberService;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.spring.apiPayload.code.status.ErrorStatus;
@@ -11,12 +10,10 @@ import umc.spring.converter.MemberConverter;
 import umc.spring.converter.MemberPreferConverter;
 import umc.spring.domain.FoodCategory;
 import umc.spring.domain.Member;
-import umc.spring.domain.Mission;
 import umc.spring.domain.mapping.MemberPrefer;
 import umc.spring.domain.mapping.MissionHistory;
 import umc.spring.repository.MemberRepository.MemberRepository;
 import umc.spring.repository.MissionHistoryRepository.MissionHistoryRepository;
-import umc.spring.repository.MissionRepository.MissionRepository;
 import umc.spring.repository.PreferFoodRepository.FoodCategoryRepository;
 import umc.spring.web.dto.MemberRequestDTO;
 
@@ -31,14 +28,11 @@ public class MemberCommandServiceImpl implements MemberCommandService {
     private final FoodCategoryRepository foodCategoryRepository;
     private final MissionHistoryRepository missionHistoryRepository;
 
-    private final PasswordEncoder passwordEncoder;
-
     @Override
     @Transactional
     public Member joinMember(MemberRequestDTO.JoinDto request) {
 
         Member newMember = MemberConverter.toMember(request);
-        newMember.encodePassword(passwordEncoder.encode(request.getPassword()));
 
         List<FoodCategory> foodCategoryList = request.getPreferCategory().stream()
                 .map(category -> {
