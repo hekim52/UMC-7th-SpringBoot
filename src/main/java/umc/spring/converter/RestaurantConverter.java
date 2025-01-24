@@ -53,7 +53,7 @@ public class RestaurantConverter {
                 .restaurant(restaurant)
                 .star(request.getStar())
                 .content(request.getContent())
-                .reviewPictureList(new ArrayList<>())
+                .reviewImageList(new ArrayList<>())
                 .build();
     }
 

@@ -9,8 +9,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import umc.spring.apiPayload.ApiResponse;
 import umc.spring.converter.RestaurantConverter;
 import umc.spring.domain.Mission;
@@ -23,6 +25,8 @@ import umc.spring.validation.annotation.CheckPage;
 import umc.spring.validation.annotation.ExistRestaurant;
 import umc.spring.web.dto.RestaurantRequestDTO;
 import umc.spring.web.dto.RestaurantResponseDTO;
+
+import java.awt.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,12 +48,15 @@ public class RestaurantRestController {
     }
 
     // 리뷰하기
-    @PostMapping("/{restaurantId}/review")
+    @PostMapping(
+            value = "/{restaurantId}/review", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ApiResponse<RestaurantResponseDTO.ReviewResultDTO> review (
             @ExistRestaurant @PathVariable Long restaurantId,
-            @RequestBody @Valid RestaurantRequestDTO.ReviewDTO request) {
+            @Parameter(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
+            @RequestPart @Valid RestaurantRequestDTO.ReviewDTO request,
+            @RequestPart("reviewPicture") MultipartFile reviewPicture) {
 
-        Review review = restaurantCommandService.review(restaurantId, request);
+        Review review = restaurantCommandService.review(restaurantId, request, reviewPicture);
 
         return ApiResponse.onSuccess(RestaurantConverter.toReviewResultDTO(review));
     }

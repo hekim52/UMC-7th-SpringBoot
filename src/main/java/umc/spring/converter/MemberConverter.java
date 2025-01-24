@@ -41,8 +41,6 @@ public class MemberConverter {
 
         return Member.builder()
                 .name(request.getName())
-                .email(request.getEmail())
-                .password(request.getPassword())
                 .gender(gender)
                 .birthYear(request.getBirthYear())
                 .birthMonth(request.getBirthMonth())
@@ -50,7 +48,6 @@ public class MemberConverter {
                 .address(request.getAddress())
                 .specAddress(request.getSpecAddress())
                 .memberPreferList(new ArrayList<>())
-                .role(request.getRole())
                 .build();
     }
 
